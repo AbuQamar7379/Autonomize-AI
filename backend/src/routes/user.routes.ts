@@ -11,4 +11,11 @@ router.get(
   }
 );
 
+// Route to find mutual followers
+router.get(
+  "/mutual-followers/:username",
+  (req: Request, res: Response, next: NextFunction) =>
+    userController.findMutualFollowers(req, res, next)
+);
+
 export default router;
