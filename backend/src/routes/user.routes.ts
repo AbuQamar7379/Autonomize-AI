@@ -28,4 +28,11 @@ router.get(
     userController.searchUsers(req, res, next)
 );
 
+// Route to soft delete a user
+router.delete(
+  "/delete-user/:username",
+  (req: Request, res: Response, next: NextFunction) =>
+    userController.deleteUser(req, res, next)
+);
+
 export default router;

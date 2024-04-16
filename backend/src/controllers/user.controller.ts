@@ -39,4 +39,18 @@ const searchUsers = catchAsync(async (req: Request, res: Response) => {
   return res.status(httpStatus.OK).send(users);
 });
 
-export { saveUser, findMutualFollowers, searchUsers };
+/**
+ * Soft delete a user by username.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<Response>} Express response object.
+ */
+const deleteUser = catchAsync(
+  async (req: Request, res: Response): Promise<Response> => {
+    let { username } = req.params;
+    let user = await userService.deleteUser(username);
+    return res.status(httpStatus.OK).send(user);
+  }
+);
+
+export { saveUser, findMutualFollowers, searchUsers, deleteUser };

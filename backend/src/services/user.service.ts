@@ -61,9 +61,9 @@ const saveUser = async (userName: string): Promise<object> => {
     });
 
     return user;
-  } catch (err) {
+  } catch (err: any) {
     throw new ApiError(
-      "Failed to save user details",
+      "Failed to save user details: " + err.message,
       httpStatus.INTERNAL_SERVER_ERROR
     );
   }
@@ -111,9 +111,9 @@ const mutualFollowers = async (username: string): Promise<object | string> => {
     );
 
     return updatedUser ? updatedUser : { message: "Failed to update user" };
-  } catch (error) {
+  } catch (err: any) {
     throw new ApiError(
-      "Failed to find mutual followers",
+      "Failed to find mutual followers: " + err.message,
       httpStatus.INTERNAL_SERVER_ERROR
     );
   }
@@ -164,4 +164,28 @@ const searchUsers = async (queries: {
   }
 };
 
-export { saveUser, mutualFollowers, searchUsers };
+/**
+ * Soft delete a user by marking it as deleted
+ * @param {string} username - GitHub username
+ * @returns {Promise<object>} - Deleted user object
+ */
+const deleteUser = async (username: string): Promise<object> => {
+  try {
+    let deletedUser = await User.findOneAndUpdate(
+      { username },
+      { deleted: true },
+      { new: true }
+    );
+    if (!deletedUser) {
+      throw new Error("User not found");
+    }
+    return deletedUser;
+  } catch (err: any) {
+    throw new ApiError(
+      "Failed to soft delete user : " + err.message,
+      httpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export { saveUser, mutualFollowers, searchUsers, deleteUser };
