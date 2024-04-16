@@ -3,6 +3,7 @@ import {
   mutualFollowers,
   searchUsers,
   deleteUser,
+  updateUser,
 } from "./user.service";
 
 export const userService = {
@@ -10,4 +11,5 @@ export const userService = {
   mutualFollowers,
   searchUsers,
   deleteUser,
+  updateUser,
 };

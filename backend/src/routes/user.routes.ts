@@ -35,4 +35,12 @@ router.delete(
     userController.deleteUser(req, res, next)
 );
 
+// Route to update a user with body validation middleware
+router.patch(
+  "/update-user/:username",
+  validate.validateBody(user.updateUser),
+  (req: Request, res: Response, next: NextFunction) =>
+    userController.updateUser(req, res, next)
+);
+
 export default router;

@@ -3,6 +3,7 @@ import {
   findMutualFollowers,
   searchUsers,
   deleteUser,
+  updateUser,
 } from "./user.controller";
 
 export const userController = {
@@ -10,4 +11,5 @@ export const userController = {
   findMutualFollowers,
   searchUsers,
   deleteUser,
+  updateUser,
 };

@@ -188,4 +188,43 @@ const deleteUser = async (username: string): Promise<object> => {
   }
 };
 
-export { saveUser, mutualFollowers, searchUsers, deleteUser };
+/**
+ * Represents a user object with location, blog and bio properties.
+ */
+interface Update {
+  location: string;
+  blog: string;
+  bio: string;
+}
+/**
+ * Update user information
+ * @param {object} userData - Updated user data
+ * @param {string} username - GitHub username
+ * @returns {Promise<UserDocument>} - Updated user object
+ */
+const updateUser = async (
+  userData: Partial<Update>,
+  username: string
+): Promise<object> => {
+  try {
+    let { location, blog, bio } = userData;
+    let user = await User.findOneAndUpdate(
+      { username },
+      { location, blog, bio },
+      { new: true }
+    );
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  } catch (err: any) {
+    throw new ApiError(
+      "Failed to update user : " + err.message,
+      httpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export { saveUser, mutualFollowers, searchUsers, deleteUser, updateUser };

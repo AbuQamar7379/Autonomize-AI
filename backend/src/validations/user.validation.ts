@@ -9,4 +9,13 @@ const searchUsers: ObjectSchema = Joi.object().keys({
   company: Joi.string(),
 });
 
-export { searchUsers };
+/**
+ * Validation schema for updating user
+ */
+const updateUser: ObjectSchema = Joi.object().keys({
+  location: Joi.string(),
+  blog: Joi.string(),
+  bio: Joi.string(),
+});
+
+export { searchUsers, updateUser };

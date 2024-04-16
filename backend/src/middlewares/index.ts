@@ -1,3 +1,3 @@
-import { validateQuery } from "./validate.middleware";
+import { validateQuery, validateBody } from "./validate.middleware";
 
-export const validate = { validateQuery };
+export const validate = { validateQuery, validateBody };

@@ -53,4 +53,17 @@ const deleteUser = catchAsync(
   }
 );
 
-export { saveUser, findMutualFollowers, searchUsers, deleteUser };
+/**
+ * Update a user by username.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<Response>} Express response object.
+ */
+const updateUser = catchAsync(
+  async (req: Request, res: Response): Promise<Response> => {
+    let user = await userService.updateUser(req.body, req.params.username);
+    return res.status(httpStatus.OK).send(user);
+  }
+);
+
+export { saveUser, findMutualFollowers, searchUsers, deleteUser, updateUser };
