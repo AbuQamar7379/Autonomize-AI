@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { query, Request, Response } from "express";
 import httpStatus from "http-status";
 import { catchAsync } from "../utils/catchAsync";
 import { userService } from "../services";
+import { string } from "joi";
 
 /**
  * Save a user by username.
@@ -27,4 +28,15 @@ const findMutualFollowers = catchAsync(async (req: Request, res: Response) => {
   return res.status(httpStatus.OK).send(mutuals);
 });
 
-export { saveUser, findMutualFollowers };
+/**
+ * Search users based on query parameters.
+ * @param {import('express').Request} req - Express request object.
+ * @param {import('express').Response} res - Express response object.
+ * @returns {Promise<import('express').Response>} Express response object.
+ */
+const searchUsers = catchAsync(async (req: Request, res: Response) => {
+  let users = await userService.searchUsers(req.query);
+  return res.status(httpStatus.OK).send(users);
+});
+
+export { saveUser, findMutualFollowers, searchUsers };

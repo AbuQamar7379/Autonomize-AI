@@ -1,3 +1,3 @@
-import { saveUser, mutualFollowers } from "./user.service";
+import { saveUser, mutualFollowers, searchUsers } from "./user.service";
 
-export const userService = { saveUser, mutualFollowers };
+export const userService = { saveUser, mutualFollowers, searchUsers };

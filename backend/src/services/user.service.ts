@@ -1,4 +1,5 @@
 import { User } from "../models";
+import { FilterQuery } from "mongoose";
 import {
   fetchDataByUsername,
   fetchFollowersByUsername,
@@ -38,7 +39,7 @@ const saveUser = async (userName: string): Promise<object> => {
       following,
       created_at,
       updated_at,
-    } = fetchedUser as any; // Type assertion to 'any'
+    } = fetchedUser;
 
     // Create and save the user in the database
     let user = User.create({
@@ -68,11 +69,12 @@ const saveUser = async (userName: string): Promise<object> => {
   }
 };
 
-// Define the type for GitHub user names
+/**
+ * Interface representing GitHub user names.
+ */
 interface GitHubUserNames {
   login: string;
 }
-
 /**
  * Find mutual followers of a user.
  * @param {string} username - GitHub username of the user.
@@ -105,7 +107,7 @@ const mutualFollowers = async (username: string): Promise<object | string> => {
     const updatedUser = await User.findOneAndUpdate(
       { username },
       { friends: mutual },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     return updatedUser ? updatedUser : { message: "Failed to update user" };
@@ -117,4 +119,49 @@ const mutualFollowers = async (username: string): Promise<object | string> => {
   }
 };
 
-export { saveUser, mutualFollowers };
+/**
+ * Represents a user object with username, location, and company properties.
+ */
+interface User {
+  username: string;
+  location?: string;
+  company?: string;
+}
+/**
+ * Search users based on specified queries
+ * @param {object} queries - Query parameters
+ * @returns {Promise<User[]>} - Array of users matching the search criteria
+ */
+const searchUsers = async (queries: {
+  username?: string;
+  location?: string;
+  company?: string;
+}): Promise<User[]> => {
+  try {
+    let { username, location, company } = queries;
+    let query: FilterQuery<User> = {}; // Initialize the query object
+
+    // conditions to the query based on the provided parameters, all operations are case-insensitive
+    if (username) {
+      query.username = { $regex: new RegExp(username, "i") };
+    }
+    if (location) {
+      query.location = { $regex: new RegExp(location, "i") };
+    }
+    if (company) {
+      query.company = { $regex: new RegExp(company, "i") };
+    }
+
+    // Find users in the database based on the constructed query
+    let users = await User.find(query);
+
+    return users;
+  } catch (err: any) {
+    throw new ApiError(
+      "Error searching users: " + err.message,
+      httpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export { saveUser, mutualFollowers, searchUsers };
