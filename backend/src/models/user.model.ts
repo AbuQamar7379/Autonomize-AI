@@ -15,6 +15,7 @@ interface UserDocument extends Document {
   email?: string;
   bio?: string;
   public_repos?: number;
+  public_gists?: number;
   followers?: number;
   following?: number;
   friends?: string[];
@@ -31,73 +32,73 @@ interface UserModel extends Model<UserDocument> {}
 /**
  * User Schema definition.
  */
-const userSchema = new mongoose.Schema<UserDocument>(
-  {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    _id: {
-      type: String,
-      required: true,
-    },
-    avatar_url: {
-      type: String,
-      required: true,
-      // validate: (url) => validator.isURL(url),
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-    },
-    company: {
-      type: String,
-    },
-    blog: {
-      type: String,
-    },
-    location: {
-      type: String,
-    },
-    email: {
-      type: String,
-      unique: true,
-      // validate: (email) => validator.isEmail(email),
-    },
-    bio: {
-      type: String,
-    },
-    public_repos: {
-      type: Number,
-    },
-    followers: {
-      type: Number,
-    },
-    following: {
-      type: Number,
-    },
-    friends: {
-      type: [String],
-    },
-    deleted: {
-      type: Boolean,
-      default: false,
-    },
-    created_at: {
-      type: String,
-      required: true,
-    },
-    updated_at: {
-      type: String,
-      required: true,
-    },
+const userSchema = new mongoose.Schema<UserDocument>({
+  username: {
+    type: String,
+    required: true,
+    unique: true,
   },
-  { timestamps: true }
-);
+  _id: {
+    type: String,
+    required: true,
+  },
+  avatar_url: {
+    type: String,
+    required: true,
+    // validate: (url) => validator.isURL(url),
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  name: {
+    type: String,
+  },
+  company: {
+    type: String,
+  },
+  blog: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  email: {
+    type: String,
+    unique: true,
+    // validate: (email) => validator.isEmail(email),
+  },
+  bio: {
+    type: String,
+  },
+  public_repos: {
+    type: Number,
+  },
+  public_gists: {
+    type: Number,
+  },
+  followers: {
+    type: Number,
+  },
+  following: {
+    type: Number,
+  },
+  friends: {
+    type: [String],
+  },
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
+  created_at: {
+    type: String,
+    required: true,
+  },
+  updated_at: {
+    type: String,
+    required: true,
+  },
+});
 
 /**
  * User model based on the userSchema.
@@ -105,3 +106,4 @@ const userSchema = new mongoose.Schema<UserDocument>(
 const UserModel = mongoose.model<UserDocument, UserModel>("User", userSchema);
 
 export { UserModel };
+export { UserDocument };

@@ -43,4 +43,12 @@ router.patch(
     userController.updateUser(req, res, next)
 );
 
+// Route to list users with query validation middleware
+router.get(
+  "/list-users",
+  validate.validateQuery(user.listUsers),
+  (req: Request, res: Response, next: NextFunction) =>
+    userController.listUsers(req, res, next)
+);
+
 export default router;

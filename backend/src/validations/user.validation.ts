@@ -18,4 +18,11 @@ const updateUser: ObjectSchema = Joi.object().keys({
   bio: Joi.string(),
 });
 
-export { searchUsers, updateUser };
+/**
+ * Validation schema for listing users
+ */
+const listUsers: ObjectSchema = Joi.object().keys({
+  sortBy: Joi.string(),
+});
+
+export { searchUsers, updateUser, listUsers };

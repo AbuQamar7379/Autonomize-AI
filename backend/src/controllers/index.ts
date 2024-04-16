@@ -4,6 +4,7 @@ import {
   searchUsers,
   deleteUser,
   updateUser,
+  listUsers,
 } from "./user.controller";
 
 export const userController = {
@@ -12,4 +13,5 @@ export const userController = {
   searchUsers,
   deleteUser,
   updateUser,
+  listUsers,
 };

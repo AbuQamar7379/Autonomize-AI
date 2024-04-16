@@ -4,6 +4,7 @@ import {
   searchUsers,
   deleteUser,
   updateUser,
+  listUsers,
 } from "./user.service";
 
 export const userService = {
@@ -12,4 +13,5 @@ export const userService = {
   searchUsers,
   deleteUser,
   updateUser,
+  listUsers,
 };

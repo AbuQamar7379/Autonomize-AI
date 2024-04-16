@@ -1,3 +1,3 @@
-import { searchUsers, updateUser } from "./user.validation";
+import { searchUsers, updateUser, listUsers } from "./user.validation";
 
-export const user = { searchUsers, updateUser };
+export const user = { searchUsers, updateUser, listUsers };

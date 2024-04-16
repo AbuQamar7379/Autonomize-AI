@@ -1,4 +1,5 @@
 import { User } from "../models";
+import { UserDocument } from "../models/user.model";
 import { FilterQuery } from "mongoose";
 import {
   fetchDataByUsername,
@@ -7,7 +8,6 @@ import {
 } from "../api/fetchGitHubData";
 import { ApiError } from "../utils/ApiError";
 import httpStatus from "http-status";
-
 /**
  * Save a user to the database if it doesn't already exist.
  * @param {string} userName - GitHub username
@@ -120,26 +120,18 @@ const mutualFollowers = async (username: string): Promise<object | string> => {
 };
 
 /**
- * Represents a user object with username, location, and company properties.
- */
-interface User {
-  username: string;
-  location?: string;
-  company?: string;
-}
-/**
  * Search users based on specified queries
  * @param {object} queries - Query parameters
- * @returns {Promise<User[]>} - Array of users matching the search criteria
+ * @returns {Promise<UserDocument[]>} - Array of users matching the search criteria
  */
 const searchUsers = async (queries: {
   username?: string;
   location?: string;
   company?: string;
-}): Promise<User[]> => {
+}): Promise<UserDocument[]> => {
   try {
     let { username, location, company } = queries;
-    let query: FilterQuery<User> = {}; // Initialize the query object
+    let query: FilterQuery<UserDocument> = {}; // Initialize the query object
 
     // conditions to the query based on the provided parameters, all operations are case-insensitive
     if (username) {
@@ -200,7 +192,7 @@ interface Update {
  * Update user information
  * @param {object} userData - Updated user data
  * @param {string} username - GitHub username
- * @returns {Promise<UserDocument>} - Updated user object
+ * @returns {Promise<object>} - Updated user object
  */
 const updateUser = async (
   userData: Partial<Update>,
@@ -227,4 +219,59 @@ const updateUser = async (
   }
 };
 
-export { saveUser, mutualFollowers, searchUsers, deleteUser, updateUser };
+/**
+ * List users with optional sorting.
+ * @param {object} queries - Query parameters for sorting.
+ * @returns {Promise<UserDocument[]>} - Array of users with optional sorting.
+ */
+const listUsers = async (queries: {
+  sortBy?: string;
+}): Promise<UserDocument[]> => {
+  try {
+    let { sortBy } = queries;
+    let users: UserDocument[] = await User.find({});
+    let sortedList: UserDocument[];
+
+    if (sortBy === "public_repos") {
+      sortedList = users.sort(
+        (a, b) => (b.public_repos || 0) - (a.public_repos || 0)
+      );
+    } else if (sortBy === "public_gists") {
+      sortedList = users.sort(
+        (a, b) => (b.public_gists || 0) - (a.public_gists || 0)
+      );
+    } else if (sortBy === "followers") {
+      sortedList = users.sort(
+        (a, b) => (b.followers || 0) - (a.followers || 0)
+      );
+    } else if (sortBy === "following") {
+      sortedList = users.sort(
+        (a, b) => (b.following || 0) - (a.following || 0)
+      );
+    } else if (sortBy === "created_at") {
+      sortedList = users.sort((a, b) => {
+        const dateA = a.created_at ? new Date(a.created_at) : new Date(0);
+        const dateB = b.created_at ? new Date(b.created_at) : new Date(0);
+        return dateB.getTime() - dateA.getTime();
+      });
+    } else {
+      return users;
+    }
+
+    return sortedList;
+  } catch (err: any) {
+    throw new ApiError(
+      "Failed to sort user : " + err.message,
+      httpStatus.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export {
+  saveUser,
+  mutualFollowers,
+  searchUsers,
+  deleteUser,
+  updateUser,
+  listUsers,
+};

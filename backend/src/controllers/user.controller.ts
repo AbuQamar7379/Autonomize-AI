@@ -66,4 +66,24 @@ const updateUser = catchAsync(
   }
 );
 
-export { saveUser, findMutualFollowers, searchUsers, deleteUser, updateUser };
+/**
+ * List users based on query parameters.
+ * @param {Request} req - Express request object.
+ * @param {Response} res - Express response object.
+ * @returns {Promise<Response>} Express response object.
+ */
+const listUsers = catchAsync(
+  async (req: Request, res: Response): Promise<Response> => {
+    let users = await userService.listUsers(req.query);
+    return res.status(httpStatus.OK).send(users);
+  }
+);
+
+export {
+  saveUser,
+  findMutualFollowers,
+  searchUsers,
+  deleteUser,
+  updateUser,
+  listUsers,
+};
