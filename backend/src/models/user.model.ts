@@ -8,6 +8,7 @@ interface UserDocument extends Document {
   _id: string;
   avatar_url: string;
   type: string;
+  repos_url: string;
   name?: string;
   company?: string;
   blog?: string;
@@ -44,12 +45,13 @@ const userSchema = new mongoose.Schema<UserDocument>({
   },
   avatar_url: {
     type: String,
-    required: true,
     // validate: (url) => validator.isURL(url),
   },
   type: {
     type: String,
-    required: true,
+  },
+  repos_url: {
+    type: String,
   },
   name: {
     type: String,
