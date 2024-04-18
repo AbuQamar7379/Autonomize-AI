@@ -75,6 +75,16 @@ function FollowersRepo() {
 
   return (
     <div>
+      <span
+        className="m-5 d-inline-block border-bottom cursor-pointer"
+        style={{ color: "blue" }}
+        onClick={() => {
+          localStorage.removeItem("followerUsername");
+          navigate("/");
+        }}
+      >
+        BACK
+      </span>
       <ReposDashboard repos={repos} details={userDatails} follower={true} />
     </div>
   );
