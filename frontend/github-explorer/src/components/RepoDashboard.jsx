@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "./RepoDashboard.css";
 
@@ -44,6 +44,8 @@ function ReposDashboard({ repos: data, details }) {
 
 // Function for user profile
 const UserProfile = ({ data }) => {
+  console.log(data, "DATA");
+  let navigate = useNavigate();
   return (
     <div className="m-auto mt-5 userProfileParent">
       <h3 className="text-center">Profile</h3>
@@ -62,7 +64,16 @@ const UserProfile = ({ data }) => {
               <p>Public Repos : {data.public_repos}</p>
               <p>Location : {data.location}</p>
             </div>
-            <p className="userDetails">Fullname : {data.name}</p>
+            <div className="d-flex justify-content-between align-items-center">
+              <p className="userDetails">Fullname : {data.name}</p>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={() => navigate(`${data.login}/followers`)}
+              >
+                Show Followers
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
