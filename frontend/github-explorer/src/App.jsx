@@ -1,5 +1,7 @@
 import "./App.css";
 import LandingPage from "./components/LandingPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RepoDetailsPage from "./components/RepoDetailsPage";
 
 export const config = {
   endpoint: "https://api.github.com/users/",
@@ -8,16 +10,15 @@ export const config = {
 function App() {
   return (
     <div>
-      <h1
-        className="text-center pb-3 mb-0 pt-3"
-        style={{ backgroundColor: "beige" }}
-      >
-        Autonomize AI - GitHub Explorer
-      </h1>
-      <hr className="mt-0" />
-      <div>
-        <LandingPage />
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/:username/repo/:repoName"
+            element={<RepoDetailsPage />}
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
