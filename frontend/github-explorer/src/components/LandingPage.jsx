@@ -52,10 +52,17 @@ function LandingPage() {
         setUserDetails(res.data);
       }
     } catch (err) {
-      enqueueSnackbar("Failed to load user profile", {
-        variant: "error",
-        autoHideDuration: 1500,
-      });
+      if (err?.response?.status === 403) {
+        enqueueSnackbar(err.response.data.message, {
+          variant: "error",
+          autoHideDuration: 1500,
+        });
+      } else {
+        enqueueSnackbar("Internal server error", {
+          variant: "error",
+          autoHideDuration: 1500,
+        });
+      }
     }
   };
 
@@ -71,7 +78,7 @@ function LandingPage() {
         });
       }
     } catch (err) {
-      if (err?.response?.status === 404) {
+      if (err?.response?.status === 403) {
         enqueueSnackbar(err.response.data.message, {
           variant: "error",
           autoHideDuration: 1500,

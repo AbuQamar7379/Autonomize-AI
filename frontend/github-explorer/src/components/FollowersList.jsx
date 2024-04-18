@@ -23,16 +23,22 @@ function FollowersList() {
         setFollowersList(res.data);
       }
     } catch (err) {
-      enqueueSnackbar(`Failed to fetch ${username}'s followers list`, {
-        variant: "error",
-        autoHideDuration: 1500,
-      });
+      if (err?.response?.status === 403) {
+        enqueueSnackbar(err.response.data.message, {
+          variant: "error",
+          autoHideDuration: 1500,
+        });
+      } else {
+        enqueueSnackbar("Internal server error", {
+          variant: "error",
+          autoHideDuration: 1500,
+        });
+      }
     }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => fetchFollowersList, [username]);
-  console.log(followersList);
 
   return (
     <div className="followersListParent">
@@ -42,7 +48,7 @@ function FollowersList() {
       >
         BACK
       </p>
-      <h3 className="text-center">{username}'s follower list</h3>
+      <h3 className="text-center">{username}'s followers list</h3>
       <hr />
       <div className="d-flex justify-content-center">
         <div className="followerCardParent">
@@ -61,8 +67,8 @@ function FollowersList() {
                 <span
                   className="followerDetails"
                   onClick={() => {
-                    //localStorage.setItem("username", follower.login);
-                    navigate("/");
+                    localStorage.setItem("followerUsername", follower.login);
+                    navigate(`${follower.login}`);
                   }}
                 >
                   more details

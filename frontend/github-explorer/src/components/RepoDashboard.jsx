@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 import "./RepoDashboard.css";
 
 // Function for repository dashboard
-function ReposDashboard({ repos: data, details }) {
+function ReposDashboard({ repos: data, details, follower }) {
   let navigate = useNavigate();
   return (
     <div>
       {data.length > 0 && (
         <div>
           {/*Rendering user details by passing user date to this function component*/}
-          <UserProfile data={details} />
+          <UserProfile data={details} follower={follower} />
         </div>
       )}
       <div className="mt-5 p-3 pb-5">
@@ -21,17 +21,19 @@ function ReposDashboard({ repos: data, details }) {
               <Grid item xs={6} sm={4} md={3} key={repo.id}>
                 <Card className="repoCard">
                   <p className="repoName">{repo.name}</p>
-                  <p
-                    className="moreDetails"
-                    onClick={() =>
-                      // whenever user click on specific repo card it redirects to repo details page as well as we are passing repo and user data as url state
-                      navigate(`${details.login}/repo/${repo.name}`, {
-                        state: { repoDetails: repo, userDetails: details },
-                      })
-                    }
-                  >
-                    Click for more details
-                  </p>
+                  {!follower && (
+                    <p
+                      className="moreDetails text-end"
+                      onClick={() =>
+                        // whenever user click on specific repo card it redirects to repo details page as well as we are passing repo and user data as url state
+                        navigate(`${details.login}/repo/${repo.name}`, {
+                          state: { repoDetails: repo, userDetails: details },
+                        })
+                      }
+                    >
+                      Click for more details
+                    </p>
+                  )}
                 </Card>
               </Grid>
             );
@@ -43,8 +45,7 @@ function ReposDashboard({ repos: data, details }) {
 }
 
 // Function for user profile
-const UserProfile = ({ data }) => {
-  console.log(data, "DATA");
+const UserProfile = ({ data, follower }) => {
   let navigate = useNavigate();
   return (
     <div className="m-auto mt-5 userProfileParent">
@@ -66,13 +67,15 @@ const UserProfile = ({ data }) => {
             </div>
             <div className="d-flex justify-content-between align-items-center">
               <p className="userDetails">Fullname : {data.name}</p>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={() => navigate(`${data.login}/followers`)}
-              >
-                Show Followers
-              </Button>
+              {!follower && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => navigate(`${data.login}/followers`)}
+                >
+                  Show Followers
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
