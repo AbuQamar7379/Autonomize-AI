@@ -1,6 +1,10 @@
 import "./App.css";
 import LandingPage from "./components/LandingPage";
 
+export const config = {
+  endpoint: "https://api.github.com/users/",
+};
+
 function App() {
   return (
     <div>
