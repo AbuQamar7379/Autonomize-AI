@@ -28,7 +28,7 @@ To get started with the backend, follow these steps:
 
 ## Deployment
 
-[Click to redirect to Frontend App](https://autonomize-ai-br5h.onrender.com/)
+[Click to redirect to Backend App](https://autonomize-ai-br5h.onrender.com/)
 
 ## Usage
 

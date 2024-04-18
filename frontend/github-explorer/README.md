@@ -40,6 +40,10 @@ To get started with the frontend, follow these steps:
 - FollowersList.jsx
 - FollowersRepo.jsx
 
+## Video of app
+
+[Click to redirect to Frontend App](https://drive.google.com/file/d/1OCF2arnTdKO4e89NtjJxIpiBE-56ioJ5/view?usp=sharing)
+
 ## App SS (Screenshot)
 
 - This is landing page
