@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "start": "ts-node src/index.ts",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "test": "jest"
@@ -21,6 +21,7 @@
     "http-status": "^1.7.4",
     "joi": "^17.12.2",
     "mongoose": "^8.2.3",
+    "ts-node": "^10.9.2",
     "validator": "^13.11.0"
   },
   "devDependencies": {

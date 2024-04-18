@@ -27,7 +27,10 @@ To get started with the frontend, follow these steps:
     npm start
 
 ## Deployment Link
- [Click to redirect to Frontend App](https://abuqamar-autonomize-ai.vercel.app/)
+
+### Note :- User's followers page is not working because of Github authentication process we can't make that API call without TOKEN but locally it is working you can check on video link as well as SS that i attached below
+
+[Click to redirect to Frontend App](https://abuqamar-autonomize-ai.vercel.app/)
 
 ## Components
 
@@ -37,7 +40,8 @@ To get started with the frontend, follow these steps:
 - FollowersList.jsx
 - FollowersRepo.jsx
 
-##  App SS (Screenshot)
+## App SS (Screenshot)
+
 - This is landing page
   ![Screenshot 2024-04-19 004238](https://github.com/AbuQamar7379/Autonomize-AI/assets/101246711/651d0f5c-18b5-487a-bba7-1a55d4d7d164)
 - In input box when we enter github username and click on Submit button
@@ -48,7 +52,7 @@ To get started with the frontend, follow these steps:
 - When we click on any repository it redirects us to repository details page
   ![Screenshot 2024-04-19 004733](https://github.com/AbuQamar7379/Autonomize-AI/assets/101246711/3e6735f7-8ce3-4462-8285-0a5257fd0d42)
   ![Screenshot 2024-04-19 004804](https://github.com/AbuQamar7379/Autonomize-AI/assets/101246711/ea155f43-b612-4a14-9a7c-4eef6922070f)
-- When we click on BACK button it again redirects us to previous page (Landing page) 
+- When we click on BACK button it again redirects us to previous page (Landing page)
   ![Screenshot 2024-04-19 004824](https://github.com/AbuQamar7379/Autonomize-AI/assets/101246711/cfef2456-c23f-4ab8-8d19-f9ab78a2850f)
   ![Screenshot 2024-04-19 004845](https://github.com/AbuQamar7379/Autonomize-AI/assets/101246711/5df703f0-294f-4590-9e52-e1c0359c1de8)
 - When we click on Show Followers button it redirects us to user's followers list page
