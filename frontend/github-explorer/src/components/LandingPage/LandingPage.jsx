@@ -1,41 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TextField, Button } from "@mui/material";
-import { config } from "../App";
+import { config } from "../../App";
 import axios from "axios";
 import { useSnackbar } from "notistack";
-import ReposDashboard from "./RepoDashboard";
+import ReposDashboard from "../RepoDashboardPage/RepoDashboard";
 import "./LandingPage.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsername, setUserDetails, setRepos } from "../../slice/githubData";
 
 function LandingPage() {
-  let [username, setUsername] = useState(
-    localStorage.getItem("username") || ""
+  let dispatch = useDispatch();
+  let { username, userDetails, repos } = useSelector(
+    (state) => state.githubData
   );
-  let [repos, setRepos] = useState([]);
-  let [userDatails, setUserDetails] = useState();
   let { enqueueSnackbar } = useSnackbar();
 
   // handling user input to fetch github user
-  const handleChange = (e) => setUsername(e.target.value);
+  const handleChange = (e) => dispatch(setUsername(e.target.value));
 
-  // conditionally fetching api || clearing state and localStorage
+  // conditionally fetching api || and clearing data
   const handleClick = (type) => {
-    switch (type) {
-      case "submit":
-        fetchUserDetails();
-        fetchRepos();
-        localStorage.setItem("username", username);
-        break;
-
-      case "clear":
-        localStorage.removeItem("username");
-        setUsername("");
-        setUserDetails();
-        setRepos([]);
-        break;
-
-      default:
-        break;
+    if (type === "submit") {
+      fetchUserDetails();
+      fetchRepos();
+    } else if (type === "clear") {
+      dispatch(setUsername(""));
+      dispatch(setUserDetails({}));
+      dispatch(setRepos([]));
     }
   };
 
@@ -48,8 +40,7 @@ function LandingPage() {
           variant: "success",
           autoHideDuration: 1500,
         });
-
-        setUserDetails(res.data);
+        dispatch(setUserDetails(res.data));
       }
     } catch (err) {
       if (err?.response?.status === 403) {
@@ -71,11 +62,11 @@ function LandingPage() {
     try {
       let res = await axios.get(`${config.endpoint}${username}/repos`);
       if (res.status === 200) {
-        setRepos(res.data);
         enqueueSnackbar("Repos fetch successfully", {
           variant: "success",
           autoHideDuration: 1500,
         });
+        dispatch(setRepos(res.data));
       }
     } catch (err) {
       if (err?.response?.status === 403) {
@@ -91,13 +82,6 @@ function LandingPage() {
       }
     }
   };
-
-  // useEffect to handle localStrorage and making api call to persist user details even after redirects to different page and again comeback
-  useEffect(() => {
-    if (localStorage.getItem("username") === username) {
-      handleClick("submit");
-    }
-  }, [username]);
 
   return (
     <div>
@@ -137,7 +121,7 @@ function LandingPage() {
       </div>
       <div>
         {/* rendering repository dashboard by passing repos and user data as props */}
-        <ReposDashboard repos={repos} details={userDatails} />
+        <ReposDashboard repos={repos} details={userDetails} />
       </div>
     </div>
   );

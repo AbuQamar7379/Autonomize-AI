@@ -1,9 +1,9 @@
-import "./App.css";
-import LandingPage from "./components/LandingPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import RepoDetailsPage from "./components/RepoDetailsPage";
-import FollowersList from "./components/FollowersList";
-import FollowersRepo from "./components/FollowersRepo";
+import LandingPage from "./components/LandingPage/LandingPage";
+import RepoDetailsPage from "./components/RepoDetailsPage/RepoDetailsPage";
+import FollowersList from "./components/FollowersListPage/FollowersList";
+import FollowersRepo from "./components/FollowerRepoPage/FollowersRepo";
+import "./App.css";
 
 export const config = {
   endpoint: "https://api.github.com/users/",

@@ -4,7 +4,7 @@
 
 ## FRONTEND
 
-This repository contains the frontend codebase for our application. The frontend is built using React.js and used Material UI components.
+This repository contains the frontend codebase for our application. The frontend is built using React.js, Redux-Toolkit for state management and Material UI components.
 
 ## Installation
 
@@ -28,17 +28,15 @@ To get started with the frontend, follow these steps:
 
 ## Deployment Link
 
-### Note :- User's followers page is not working because of Github authentication process we can't make that API call without TOKEN but locally it is working you can check on video link as well as SS that i attached below
-
 [Click to redirect to Frontend App](https://abuqamar-autonomize-ai.vercel.app/)
 
 ## Components
 
-- LandingPage.jsx
-- RepoDashboard.jsx
-- RepoDetailsPage.jsx
-- FollowersList.jsx
-- FollowersRepo.jsx
+- LandingPage/LandingPage.jsx
+- RepoDashboadPage/RepoDashboard.jsx
+- RepoDetailsPage/RepoDetailsPage.jsx
+- FollowersListPage/FollowersList.jsx
+- FollowersRepoPage/FollowersRepo.jsx
 
 ## Video of app
 
